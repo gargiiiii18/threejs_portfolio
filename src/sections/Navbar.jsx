@@ -1,6 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {navLinks} from "../constants/index.js";
 
 const Navbar = () => {
+    const [isOpen, setOpen] = useState(false);
+
+    const toggleMenu = () =>  setOpen((prevIsOpen) => !prevIsOpen);
+
+    const NavItems = () => {
+        return(
+            <ul className="nav-ul">
+                {navLinks.map(({id, href, name}) => (
+                    <li key={id} className="nav-li">
+                        <a className="nav-li_a" href={href} onClick={()=>{}}>
+                            {name}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-black/90">Navbar
         <div className="max-w-7xl mx-auto">
@@ -8,9 +27,14 @@ const Navbar = () => {
                 <a href="/" className="text-neutral-400 font-bold text-xl hover:text-white transition-colors">
                     Gargi
                 </a>
-                <button>
-                    <img src={"assets/menu.svg"} alt="Toggle" className="w-6 h-6"/>
+                <button onClick={toggleMenu} className="text-neutral-400 hover:text-white focus:outline-none sm:hidden flex" aria-label="Toggle Menu">
+                    <img src={isOpen ? "assets/close.svg" : "assets/menu.svg"} alt="Toggle" className="w-6 h-6"/>
                 </button>
+
+                <nav className="sm:flex hidden">
+                    <NavItems/>
+                </nav>
+
             </div>
         </div>
         </header>
